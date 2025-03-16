@@ -1,0 +1,33 @@
+### Bin/Obj Folders ###
+bin/
+obj/
+*.exe
+*.dll
+*.config
+*.so
+*.dylib
+*.node
+
+### Editor Specific ###
+.idea
+.vscode/
+*.editorconfig
+*.env
+*.env.local
+
+### NuGet Packages ###
+packages/
+
+### Log and Other Generated Files ###
+*.log
+*.txt
+*.xml
+*.mdf
+*.ldf
+*.db
+*.sqlite
+
+### Test Results ###
+TestResults/
+*.test
+*.trx

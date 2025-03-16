@@ -1,0 +1,6 @@
+@DocumentaryRestApi_HostAddress = http://localhost:5032
+
+GET {{DocumentaryRestApi_HostAddress}}/api/Documentary
+Accept: application/json
+
+###
