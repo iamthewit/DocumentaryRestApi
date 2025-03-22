@@ -29,4 +29,26 @@ public class DocumentaryController(DocumentaryContext context) : ControllerBase
         
         return await Task.FromResult(Ok(documentaries));
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(Documentary documentary)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
+        try
+        {
+            context.Documentaries.Add(documentary);
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateException e)
+        {
+            return StatusCode(500, e);
+        }
+        
+        // Generate the URL for the new resource using the route name
+        string url = Url.RouteUrl("GetDocumentary", new { id = documentary.Id });
+        
+        return Created(url, documentary);
+    }
 }
