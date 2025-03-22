@@ -31,3 +31,6 @@ packages/
 TestResults/
 *.test
 *.trx
+documentaries.db-wal
+documentaries.db-shm
+Folder.DotSettings.user

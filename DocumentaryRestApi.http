@@ -4,3 +4,30 @@ GET {{DocumentaryRestApi_HostAddress}}/api/Documentary
 Accept: application/json
 
 ###
+@id = 1111-2222-3333-4444
+
+GET {{DocumentaryRestApi_HostAddress}}/api/Documentary/{{id}}
+Accept: application/json
+
+###
+@random_uuid = {{$uuid}}
+
+POST {{DocumentaryRestApi_HostAddress}}/api/Documentary
+Content-Type: application/json
+
+{
+  "id": "{{random_uuid}}",
+  "title": "{{$random.team.name}}",
+  "director": "{{$random.name.fullName}}"
+}
+
+###
+@documentaryId = "30f51362-abd3-4aaf-971b-99635cfd20f3"
+PUT {{DocumentaryRestApi_HostAddress}}/api/Documentary/{{documentaryId}}
+Content-Type: application/json
+
+{
+  "id": "{{documentaryId}}",
+  "title": "{{$random.team.name}}",
+  "director": "{{$random.name.fullName}}"
+}

@@ -51,4 +51,32 @@ public class DocumentaryController(DocumentaryContext context) : ControllerBase
         
         return Created(url, documentary);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(string id, Documentary documentary)
+    {
+        if (id != documentary.Id)
+        {
+            return BadRequest();
+        }
+
+        context.Entry(documentary).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (await context.Documentaries.FindAsync(id) == null)
+            {
+                return NotFound();
+            }
+
+            throw;
+        }
+
+        return NoContent();
+        
+    }
 }
