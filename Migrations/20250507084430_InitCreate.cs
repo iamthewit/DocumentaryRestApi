@@ -5,7 +5,7 @@
 namespace DocumentaryRestApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,9 +14,9 @@ namespace DocumentaryRestApi.Migrations
                 name: "Documentaries",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", maxLength: 36, nullable: false),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Director = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
+                    Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Director = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {

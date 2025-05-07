@@ -1,4 +1,5 @@
 using DocumentaryRestApi.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,12 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<DocumentaryContext>();
+// builder.Services.AddDbContext<DocumentaryContext>();
+
+// Configure PostgreSQL
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<DocumentaryContext>(options =>
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 

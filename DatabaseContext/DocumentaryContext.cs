@@ -7,11 +7,5 @@ public class DocumentaryContext : DbContext
 {
     public DbSet<Documentary> Documentaries { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlite("Filename=./documentaries.db");
-        }
-    }
+    public DocumentaryContext(DbContextOptions<DocumentaryContext> options) : base(options) { }
 }
