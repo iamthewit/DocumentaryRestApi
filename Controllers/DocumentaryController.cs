@@ -77,6 +77,20 @@ public class DocumentaryController(DocumentaryContext context) : ControllerBase
         }
 
         return NoContent();
-        
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var documentary = await context.Documentaries.FindAsync(id);
+        if (documentary == null)
+        {
+            return NotFound();
+        }
+
+        context.Documentaries.Remove(documentary);
+        await context.SaveChangesAsync();
+
+        return NoContent();
     }
 }
