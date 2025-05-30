@@ -12,7 +12,9 @@ public class DocumentaryController(DocumentaryContext context) : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(string id)
     {
-        var documentary = await context.Documentaries.FindAsync(id);
+        var documentary = await context.Documentaries
+            .Include(d => d.Director)
+            .FirstOrDefaultAsync(d => d.Id == id);
 
         if (documentary == null)
         {
@@ -25,7 +27,9 @@ public class DocumentaryController(DocumentaryContext context) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> List()
     {
-        var documentaries = await context.Documentaries.ToListAsync();
+        var documentaries = await context.Documentaries
+            .Include(d => d.Director)
+            .ToListAsync();
         
         return await Task.FromResult(Ok(documentaries));
     }
@@ -33,11 +37,24 @@ public class DocumentaryController(DocumentaryContext context) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Documentary documentary)
     {
+        // First check if the basic validation passes
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
+
+        // Find and validate director
+        var director = await context.Directors
+            .FirstOrDefaultAsync(d => d.Id == documentary.DirectorId);
+
+        if (director == null)
+        {
+            ModelState.AddModelError("DirectorId", "Director not found");
+            return BadRequest(ModelState);
+        }
         
         try
         {
+            // Set the Director before adding to context
+            documentary.Director = director;
             context.Documentaries.Add(documentary);
             await context.SaveChangesAsync();
         }

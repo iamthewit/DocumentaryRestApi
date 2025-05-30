@@ -21,16 +21,30 @@ namespace DocumentaryRestApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("DocumentaryRestApi.Model.Director", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Directors");
+                });
+
             modelBuilder.Entity("DocumentaryRestApi.Model.Documentary", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
                         .HasColumnType("character varying(36)");
 
-                    b.Property<string>("Director")
+                    b.Property<string>("DirectorId")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasMaxLength(36)
+                        .HasColumnType("character varying(36)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -39,7 +53,25 @@ namespace DocumentaryRestApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DirectorId");
+
                     b.ToTable("Documentaries");
+                });
+
+            modelBuilder.Entity("DocumentaryRestApi.Model.Documentary", b =>
+                {
+                    b.HasOne("DocumentaryRestApi.Model.Director", "Director")
+                        .WithMany("Documentaries")
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Director");
+                });
+
+            modelBuilder.Entity("DocumentaryRestApi.Model.Director", b =>
+                {
+                    b.Navigation("Documentaries");
                 });
 #pragma warning restore 612, 618
         }

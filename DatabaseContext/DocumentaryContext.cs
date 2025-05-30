@@ -5,7 +5,8 @@ namespace DocumentaryRestApi.DatabaseContext;
 
 public class DocumentaryContext : DbContext
 {
-    public DbSet<Documentary> Documentaries { get; set; }
-
     public DocumentaryContext(DbContextOptions<DocumentaryContext> options) : base(options) { }
+    
+    public DbSet<Documentary> Documentaries { get; set; }
+    public DbSet<Director> Directors { get; set; } = null!;
 }

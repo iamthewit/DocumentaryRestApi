@@ -1,16 +1,39 @@
 @DocumentaryRestApi_HostAddress = http://localhost:5032
 
+### Director Resource
+
+### List
+GET {{DocumentaryRestApi_HostAddress}}/api/Director
+
+### Read
+@directorId = e58f134d-6c6f-41e8-b2dc-c134c51e8693
+GET {{DocumentaryRestApi_HostAddress}}/api/Director/{{directorId}}
+
+### Create
+@director_random_uuid = {{$uuid}}
+POST {{DocumentaryRestApi_HostAddress}}/api/Director
+Content-Type: application/json
+
+{
+  "id": "{{director_random_uuid}}",
+  "name": "{{$random.name.fullName}}"
+}
+
+### Documentary Resource
+
+### List
 GET {{DocumentaryRestApi_HostAddress}}/api/Documentary
 Accept: application/json
 
-###
-@id = 1111-2222-3333-4444
+### Read
+@documentaryId = 04075352-a66d-41ff-9c85-e8f4e5682c9b
 
-GET {{DocumentaryRestApi_HostAddress}}/api/Documentary/{{id}}
+GET {{DocumentaryRestApi_HostAddress}}/api/Documentary/{{documentaryId}}
 Accept: application/json
 
-###
+### Create
 @random_uuid = {{$uuid}}
+@director_id = c02403f5-299e-493c-a81e-103923d127f8
 
 POST {{DocumentaryRestApi_HostAddress}}/api/Documentary
 Content-Type: application/json
@@ -18,16 +41,15 @@ Content-Type: application/json
 {
   "id": "{{random_uuid}}",
   "title": "{{$random.team.name}}",
-  "director": "{{$random.name.fullName}}"
+  "directorId": "{{director_id}}"
 }
 
-###
-@documentaryId = "30f51362-abd3-4aaf-971b-99635cfd20f3"
+### Update
 PUT {{DocumentaryRestApi_HostAddress}}/api/Documentary/{{documentaryId}}
 Content-Type: application/json
 
 {
   "id": "{{documentaryId}}",
   "title": "{{$random.team.name}}",
-  "director": "{{$random.name.fullName}}"
+  "directorId": "{{director_id}}"
 }
